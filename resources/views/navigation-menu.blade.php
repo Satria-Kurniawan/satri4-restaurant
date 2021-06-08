@@ -1,4 +1,4 @@
-<nav x-data="{ open: false }" class="bg-white border-b border-gray-100">
+<nav x-data="{ open: false }" class="bg-white border-b border-gray-100 rounded">
     <!-- Primary Navigation Menu -->
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between h-16">
@@ -10,21 +10,55 @@
                     </a>
                 </div>
                 <!-- Navigation Links -->
-                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                    <x-jet-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
-                        {{ __('Dashboard') }}
-                    </x-jet-nav-link>
-                </div>
-                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                    <x-jet-nav-link href="{{ route('categories') }}" :active="request()->routeIs('categories')">
-                        {{ __('Categories') }}
-                    </x-jet-nav-link>
-                </div>
-                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                    <x-jet-nav-link href="{{ route('products') }}" :active="request()->routeIs('products')">
-                        {{ __('Products') }}
-                    </x-jet-nav-link>
-                </div>
+                @if (Route::has('login'))
+                    @auth
+                        @if (Auth::user()->role == 'user')
+                            <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                                <x-jet-nav-link href="{{ route('home') }}" :active="request()->routeIs('home')">
+                                    {{ __('Home') }}
+                                </x-jet-nav-link>
+                            </div>
+                            <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                                <x-jet-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
+                                    {{ __('Dashboard') }}
+                                </x-jet-nav-link>
+                            </div>
+                            <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                                <x-jet-nav-link href="{{ route('cart') }}" :active="request()->routeIs('cart')">
+                                    {{ __('Order') }}
+                                </x-jet-nav-link>
+                            </div>
+                        @else
+                            <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                                <x-jet-nav-link href="{{ route('home') }}" :active="request()->routeIs('home')">
+                                    {{ __('Home') }}
+                                </x-jet-nav-link>
+                            </div>
+                            <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                                <x-jet-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
+                                    {{ __('Dashboard') }}
+                                </x-jet-nav-link>
+                            </div>
+                            <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                                <x-jet-nav-link href="{{ route('cart') }}" :active="request()->routeIs('cart')">
+                                    {{ __('Order') }}
+                                </x-jet-nav-link>
+                            </div>
+                            <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                                <x-jet-nav-link href="{{ route('categories') }}" :active="request()->routeIs('categories')">
+                                    {{ __('Categories') }}
+                                </x-jet-nav-link>
+                            </div>
+                            <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                                <x-jet-nav-link href="{{ route('products') }}" :active="request()->routeIs('products')">
+                                    {{ __('Products') }}
+                                </x-jet-nav-link>
+                            </div>
+                        @endif
+                    @endauth
+
+                @endif
+
             </div>
 
             <div class="hidden sm:flex sm:items-center sm:ml-6">

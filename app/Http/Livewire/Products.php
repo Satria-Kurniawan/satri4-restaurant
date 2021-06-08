@@ -15,9 +15,14 @@ class Products extends Component
 
     public $search;
     // public $products;
-    public $productId, $name, $price, $picture, $category;
+    public $productId, $name, $price, $picture,$qty, $category;
     public $isOpen = 0;
-    public $deleteOpen = 0;
+    // public $deleteOpen = 0;
+
+    public function updatingSearch()
+    {
+        $this->resetPage();
+    }
 
     public function render()
     {
@@ -30,7 +35,7 @@ class Products extends Component
 
         return view('livewire.products', [
             'products' => Product::where('name', 'like', $searchParams)
-                                ->orWhere('price', 'like', $searchParams)->latest()->paginate(3)
+                                ->orWhere('price', 'like', $searchParams)->latest()->paginate(4)
         ], compact('cat'));
     }
 
@@ -42,13 +47,13 @@ class Products extends Component
         $this->isOpen = false;
     }
 
-    public function delShowModal(){
-        $this->deleteOpen = true;
-    }
+    // public function delShowModal(){
+    //     $this->deleteOpen = true;
+    // }
 
-    public function delHideModal(){
-        $this->deleteOpen = false;
-    }
+    // public function delHideModal(){
+    //     $this->deleteOpen = false;
+    // }
 
     public function store(){
         $this->validate(
@@ -57,6 +62,7 @@ class Products extends Component
                 'name' => 'required',
                 'price' => 'required',
                 'picture' => 'required|max:1024',
+                'qty' => 'required',
             ]
         );
 
@@ -69,6 +75,7 @@ class Products extends Component
             'name' => $this->name,
             'price' => $this->price,
             'picture' => $this->picture->hashName(),
+            'qty' => $this->qty,
         ]);
 
         $this->hideModal();
@@ -80,6 +87,7 @@ class Products extends Component
         $this->name = '';
         $this->price = '';
         $this->picture = '';
+        $this->qty = '';
     }
 
     public function edit($id){
@@ -87,13 +95,14 @@ class Products extends Component
         $this->productId = $id;
         $this->name = $product->name;
         $this->price = $product->price;
+        $this->qty = $product->qty;
 
         $this->showModal();
     }
 
     public function delete($id){
         Product::find($id)->delete();
-        $this->delHideModal();
+        // $this->delHideModal();
         session()->flash('deletemessage', 'Deleted Successfully');
     }
 }
