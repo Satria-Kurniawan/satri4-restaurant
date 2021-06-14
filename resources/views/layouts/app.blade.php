@@ -200,8 +200,8 @@
                             <i class="fas fa-plus mr-3"></i> New Report
                         </button>
                     </div> --}}
-                    <div class="p-3">
-                        <img src="img/" alt="Logo Yaa Restaurant">
+                    <div class="w-44">
+                        <img src="img/YaaRestaurant.png" alt="Logo Yaa Restaurant">
                     </div>
                     <nav class="text-white text-base font-semibold pt-3">
                         @if (Route::has('login'))
@@ -239,6 +239,14 @@
                                 <a href="{{ route('products') }}" class="flex items-center text-white opacity-75 hover:opacity-100 py-4 pl-6 nav-item">
                                     <i class="fas fa-table mr-3"></i>
                                     {{ __('Products') }}
+                                </a>
+                                <a href="{{ route('productstransactions') }}" class="flex items-center text-white opacity-75 hover:opacity-100 py-4 pl-6 nav-item">
+                                    <i class="fas fa-table mr-3"></i>
+                                    {{ __('ProdTransacts') }}
+                                </a>
+                                <a href="{{ route('transactions') }}" class="flex items-center text-white opacity-75 hover:opacity-100 py-4 pl-6 nav-item">
+                                    <i class="fas fa-table mr-3"></i>
+                                    {{ __('Transactions') }}
                                 </a>
                             @endif
                             @endauth
@@ -302,6 +310,14 @@
                                     <a href="{{ route('products') }}" class="flex items-center text-white opacity-75 hover:opacity-100 py-4 pl-6 nav-item">
                                         <i class="fas fa-table mr-3"></i>
                                         {{ __('Products') }}
+                                    </a>
+                                    <a href="{{ route('productstransactions') }}" class="flex items-center text-white opacity-75 hover:opacity-100 py-4 pl-6 nav-item">
+                                        <i class="fas fa-table mr-3"></i>
+                                        {{ __('ProdTransacts') }}
+                                    </a>
+                                    <a href="{{ route('transactions') }}" class="flex items-center text-white opacity-75 hover:opacity-100 py-4 pl-6 nav-item">
+                                        <i class="fas fa-table mr-3"></i>
+                                        {{ __('Transactions') }}
                                     </a>
                                 @endif
                                 @endauth
@@ -502,6 +518,8 @@
         @stack('modals')
 
         @livewireScripts
+
+        <script src="https://cdn.jsdelivr.net/gh/livewire/turbolinks@v0.1.x/dist/livewire-turbolinks.js" data-turbolinks-eval="false" data-turbo-eval="false"></script>
 
         @stack('script-custom')
 

@@ -17,7 +17,8 @@ class Products extends Component
     // public $products;
     public $productId, $name, $price, $picture,$qty, $category;
     public $isOpen = 0;
-    // public $deleteOpen = 0;
+    public $deleteOpen = 0;
+    public $selectedItem;
 
     public function updatingSearch()
     {
@@ -51,9 +52,9 @@ class Products extends Component
     //     $this->deleteOpen = true;
     // }
 
-    // public function delHideModal(){
-    //     $this->deleteOpen = false;
-    // }
+    public function delHideModal(){
+        $this->deleteOpen = false;
+    }
 
     public function store(){
         $this->validate(
@@ -101,8 +102,15 @@ class Products extends Component
     }
 
     public function delete($id){
-        Product::find($id)->delete();
+        // Product::find($id)->delete();
         // $this->delHideModal();
+        Product::destroy($this->selectedItem);
+        $this->deleteOpen = false;
         session()->flash('deletemessage', 'Deleted Successfully');
+    }
+
+    public function selectItem($productId){
+        $this->selectedItem = $productId;
+        $this->deleteOpen = true;
     }
 }

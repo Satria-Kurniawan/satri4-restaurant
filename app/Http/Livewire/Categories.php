@@ -12,6 +12,7 @@ class Categories extends Component
     public $categoryId, $category;
     public $isOpen = 0;
     public $deleteOpen = 0;
+    public $selectedItem;
 
     public function render()
     {
@@ -29,9 +30,9 @@ class Categories extends Component
         $this->isOpen = false;
     }
 
-    public function delShowModal(){
-        $this->deleteOpen = true;
-    }
+    // public function delShowModal(){
+    //     $this->deleteOpen = true;
+    // }
 
     public function delHideModal(){
         $this->deleteOpen = false;
@@ -65,8 +66,15 @@ class Categories extends Component
     }
 
     public function delete($id){
-        Category::find($id)->delete();
-        $this->delHideModal();
+        // Product::find($id)->delete();
+        // $this->delHideModal();
+        Category::destroy($this->selectedItem);
+        $this->deleteOpen = false;
         session()->flash('deletemessage', 'Deleted Successfully');
+    }
+
+    public function selectItem($categoryId){
+        $this->selectedItem = $categoryId;
+        $this->deleteOpen = true;
     }
 }

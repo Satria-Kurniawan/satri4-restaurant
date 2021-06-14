@@ -54,6 +54,15 @@
                                     {{ __('Products') }}
                                 </x-jet-nav-link>
                             </div>
+                            <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                                <x-jet-nav-link href="{{ route('productstransactions') }}" :active="request()->routeIs('productstransactions')">
+                                    {{ __('ProdTransacts') }}
+                                </x-jet-nav-link>
+                            </div><div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                                <x-jet-nav-link href="{{ route('transactions') }}" :active="request()->routeIs('transactions')">
+                                    {{ __('Transactions') }}
+                                </x-jet-nav-link>
+                            </div>
                         @endif
                     @endauth
 
@@ -181,8 +190,18 @@
     <!-- Responsive Navigation Menu -->
     <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden">
         <div class="pt-2 pb-3 space-y-1">
+            <x-jet-responsive-nav-link href="{{ route('home') }}" :active="request()->routeIs('home')">
+                {{ __('Home') }}
+            </x-jet-responsive-nav-link>
+        </div>
+        <div class="pt-2 pb-3 space-y-1">
             <x-jet-responsive-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
                 {{ __('Dashboard') }}
+            </x-jet-responsive-nav-link>
+        </div>
+        <div class="pt-2 pb-3 space-y-1">
+            <x-jet-responsive-nav-link href="{{ route('cart') }}" :active="request()->routeIs('cart')">
+                {{ __('Order') }}
             </x-jet-responsive-nav-link>
         </div>
         <div class="pt-2 pb-3 space-y-1">
@@ -193,6 +212,16 @@
         <div class="pt-2 pb-3 space-y-1">
             <x-jet-responsive-nav-link href="{{ route('products') }}" :active="request()->routeIs('products')">
                 {{ __('Products') }}
+            </x-jet-responsive-nav-link>
+        </div>
+        <div class="pt-2 pb-3 space-y-1">
+            <x-jet-responsive-nav-link href="{{ route('productstransactions') }}" :active="request()->routeIs('productstransactions')">
+                {{ __('ProdTransacts') }}
+            </x-jet-responsive-nav-link>
+        </div>
+        <div class="pt-2 pb-3 space-y-1">
+            <x-jet-responsive-nav-link href="{{ route('transactions') }}" :active="request()->routeIs('transactions')">
+                {{ __('Transactions') }}
             </x-jet-responsive-nav-link>
         </div>
 

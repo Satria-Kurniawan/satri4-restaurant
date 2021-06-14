@@ -6,11 +6,24 @@
             <div class="card-body">
                 <div class="card-header bg-white mb-4">
                     <div class="row mb-0">
+                        @if (session()->has('OrderS'))
+                        <div class="bg-gradient-to-r from-green-400 to-blue-500 border-l-4 border-black-500 text-white-700 p-1 mb-3 mt-3" role="alert">
+                            <h5 class="text-white font-semibold">{{ session('OrderS') }}</h5>
+                        </div>
+                        @endif
                         <div class="col-md-4">
                             <h2 class="font-weight-bold">Products List</h2>
                         </div>
-                        <div class="col-md-8">
-                            <input wire:model="search" class="appearance-none block w-full bg-gray-100 text-gray-700 border rounded py-2 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" id="search" name="search" type="text" placeholder="Cari...">
+                        <div class="col-md-3">
+                            <select class="form-control bg-black-100" wire:model="selectedCategory">
+                                <option value="">All Category</option>
+                                 @foreach (App\Models\Category::pluck('category', 'id') as $cate_id => $cate_name)
+                                     <option value="{{ $cate_id }}">{{ $cate_name }}</option>
+                                 @endforeach
+                             </select>
+                        </div>
+                        <div class="col-md-5">
+                            <input wire:model="search" class="appearance-none block w-full bg-gray-100 text-gray-700 border rounded py-2 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" id="search" name="search" type="text" placeholder="Search...">
                         </div>
                     </div>
                 </div>
@@ -27,7 +40,6 @@
                                 <div class="card-footer">
                                     <h6 class="text-center mb-2">{{ $product->name }}</h6>
                                     <h6 class="text-center mb-2">Rp. {{ number_format($product['price'],2,',','.') }}</h6>
-
                                 </div>
                             </div>
                         </div>
@@ -37,7 +49,7 @@
                         </div>
                     @endforelse
                 </div>
-                <div style="display:flex;justify-content: right">
+                <div style="display:flex; float: right;">
                     {{$products->links()}}
                 </div>
             </div>
@@ -54,7 +66,7 @@
                         <tr>
                             <th>Name</th>
                             <th>Price</th>
-                            <th>Jumlah</th>
+                            <th>Quantity</th>
                         </tr>
                     </thead>
                     <tbody class="m-0">
@@ -83,9 +95,17 @@
                         @endforelse
                     </tbody>
                 </table>
+
                 @if (session()->has('error'))
-                    {{session('error')}}
+                <div class="bg-gradient-to-r from-red-700 to-orange-700 border-l-4 border-black-500 text-white-700 p-1 mb-3 mt-3" role="alert">
+                    <h5 class="text-white font-semibold">{{ session('error') }}</h5>
+                </div>
                 @endif
+
+                @if ($isOpen)
+                    @include('livewire.order-detail')
+                @endif
+
                 <div class="card">
                     <div class="card-footer border-white">
                         <h4 class="font-weight-bold">Cart Summary</h4>
@@ -93,13 +113,13 @@
                         {{-- <h5>Tax : {{$summary['pajak']}}</h5> --}}
                         <h5>Total Harga : Rp. {{ number_format($summary['total'],2,',','.') }}</h5>
 
-                        <div class="form-group mt-4">
+                        {{-- <div class="form-group mt-4">
                             <input type="number" wire:model="payment" class="form-control" id="payment" placeholder="Input customer payment amount">
                             <input type="hidden" id="total" value="{{$summary['total']}}">
-                        </div>
+                        </div> --}}
 
-                        <form wire:submit.prevent="handleSubmit">
-                            <div>
+                        {{-- <form wire:submit.prevent="handleSubmit"> --}}
+                            {{-- <div>
                                 <label>Bayar</label>
                                 <h1 id="paymentText" wire:ignore>Rp. 0</h1>
                             </div>
@@ -107,12 +127,17 @@
                             <div>
                                 <label>Kembali</label>
                                 <h1 id="kembalianText" wire:ignore>Rp. 0</h1>
-                            </div>
+                            </div> --}}
 
-                            <div class="mt-4">
-                                <button wire:ignore type="submit" id="saveButton" disabled class="btn btn-success btn-block" id="saveButton">Save Transaction<i class="ml-2 fas fa-save fa-lg"></i></button>
-                            </div>
-                        </form>
+                            {{-- <div class="mt-4">
+                                <button wire:ignore type="submit" id="saveButton" class="btn btn-success btn-block">Order<i class="ml-2 fas fa-shopping-cart"></i></button>
+                            </div> --}}
+                        {{-- </form> --}}
+                        <div class="mt-4">
+                            <button wire:click="showModal()" class="btn btn-success btn-block">
+                                Order<i class="ml-2 fas fa-shopping-cart"></i>
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -120,7 +145,7 @@
     </div>
 </div>
 
-@push('script-custom')
+{{-- @push('script-custom')
     <script>
         payment.oninput = () => {
             const paymentAmount = document.getElementById("payment").value
@@ -148,4 +173,4 @@
             return split[1] != undefined ? rupiah + ',' + split[1] : rupiah
         }
     </script>
-@endpush
+@endpush --}}

@@ -65,12 +65,12 @@
                             <button wire:click="edit({{ $product->id }})" class="w-1/4 bg-blue-500 hover:bg-blue-700 text-white font-bold my-1 py-2 px-2 rounded">
                                 <div class="fas fa-edit"></div>
                             </button>
-                            {{-- <button wire:click="delete({{ $product->id }})" class="w-1/4 bg-red-500 hover:bg-red-700 text-white font-bold my-1 py-2 px-2 rounded">
+                            <button wire:click="selectItem({{ $product->id }})" class="w-1/4 bg-red-500 hover:bg-red-700 text-white font-bold my-1 py-2 px-2 rounded">
+                                <div class="fas fa-trash-alt"></div>
+                            </button>
+                            {{-- <button type="button" class="w-1/4 bg-red-500 hover:bg-red-700 text-white font-bold my-1 py-2 px-2 rounded" wire:click="delete({{ $product->id }})" onclick="confirm('Are you sure you want to delete?') || event.stopImmediatePropagation()">
                                 <div class="fas fa-trash-alt"></div>
                             </button> --}}
-                            <button type="button" class="w-1/4 bg-red-500 hover:bg-red-700 text-white font-bold my-1 py-2 px-2 rounded" wire:click="delete({{ $product->id }})" onclick="confirm('Are you sure you want to delete?') || event.stopImmediatePropagation()">
-                                    <div class="fas fa-trash-alt"></div>
-                            </button>
                         </td>
                     </tr>
                     @endforeach
@@ -81,9 +81,9 @@
                 {{ $products->links() }}
             </div>
 
-            {{-- @if ($deleteOpen)
+            @if ($deleteOpen)
                 @include('livewire.delete-products')
-            @endif --}}
+            @endif
 
         </div>
 

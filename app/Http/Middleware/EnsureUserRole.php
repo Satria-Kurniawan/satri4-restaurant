@@ -55,6 +55,7 @@ class EnsureUserRole
                 'categories',
                 'products',
                 'productstransactions',
+                'transactions',
             ],
         ];
     }

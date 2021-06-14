@@ -49,20 +49,20 @@
                             <button wire:click="edit({{ $category->id }})" class="w-1/6 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-2 rounded">
                                 <div class="fas fa-edit"></div>
                             </button>
-                            {{-- <button wire:click="delete({{ $product->id }})" class="w-1/6 bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-2 rounded">
-                                <div class="fas fa-trash-alt"></div>
-                            </button> --}}
-                            <button type="button" class="w-1/6 bg-red-500 hover:bg-red-700 text-white font-bold my-1 py-2 px-2 rounded" wire:click="delete({{ $category->id }})" onclick="confirm('Are you sure you want to delete?') || event.stopImmediatePropagation()">
+                            <button wire:click="selectItem({{ $category->id }})" class="w-1/6 bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-2 rounded">
                                 <div class="fas fa-trash-alt"></div>
                             </button>
+                            {{-- <button type="button" class="w-1/6 bg-red-500 hover:bg-red-700 text-white font-bold my-1 py-2 px-2 rounded" wire:click="delete({{ $category->id }})" onclick="confirm('Are you sure you want to delete?') || event.stopImmediatePropagation()">
+                                <div class="fas fa-trash-alt"></div>
+                            </button> --}}
                         </td>
                     </tr>
                     @endforeach
                 </tbody>
             </table>
 
-            {{-- @if ($deleteOpen)
+            @if ($deleteOpen)
                 @include('livewire.delete-categories')
-            @endif --}}
+            @endif
 
         </div>

@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire;
 
+use App\Models\Category;
 use Livewire\Component;
 use App\Models\Product;
 use App\Models\Transaction;
@@ -21,6 +22,8 @@ class Cart extends Component
     public $search;
     public $tax = "0%";
     public $payment = 0;
+    public $isOpen = 0;
+    public $selectedCategory;
 
     public function updatingSearch()
     {
@@ -29,9 +32,13 @@ class Cart extends Component
 
     public function render()
     {
-        $products = Product::where('name', 'like', '%'.$this->search.'%')
-                            ->orWhere('price', 'like', '%'.$this->search.'%')
-                            ->orderBy('created_at', 'DESC')->paginate(8);
+        $products = Product::when($this->selectedCategory != "", function($q){
+                                $q->where('category_id', $this->selectedCategory);
+                            })->when($this->search != "", function($q){
+                                $q->where('name', 'like', '%'.$this->search.'%');
+                            })->when($this->search != "", function($q){
+                                $q->orWhere('price', 'like', '%'.$this->search.'%');
+                            })->orderBy('created_at', 'ASC')->paginate(8);
 
         $condition = new \Darryldecode\Cart\CartCondition([
             'name' => 'pajak',
@@ -168,7 +175,7 @@ class Cart extends Component
         $bayar = $this->payment;
         $kembalian = (int) $bayar - (int) $cartTotal;
 
-        if($kembalian >= 0){
+        // if($kembalian >= 0){
             DB::beginTransaction();
 
             try {
@@ -201,7 +208,7 @@ class Cart extends Component
                 Transaction::create([
                     'invoice_number' => $id,
                     'user_id' => Auth()->id(),
-                    'pay' => $bayar,
+                    // 'pay' => $bayar,
                     'total' => $cartTotal
                 ]);
 
@@ -215,12 +222,22 @@ class Cart extends Component
 
                 \Cart::session(Auth()->id())->clear();
                 $this->payment = 0;
+                session()->flash('OrderS', 'Successfully Ordered');
+                $this->hideModal();
 
                 DB::commit();
             } catch (\Throwable $th) {
                 DB::rollback();
                 return session()->flash('error', $th);
             }
-        }
+        // }
+    }
+
+    public function showModal(){
+        $this->isOpen = true;
+    }
+
+    public function hideModal(){
+        $this->isOpen = false;
     }
 }
